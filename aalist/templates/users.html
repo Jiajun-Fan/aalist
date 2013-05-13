@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head><title>AA List</title></head>
+<body>
+<ul>
+{% for user in users %}
+    <li><span>{{ user.username }}</span><span>{{ user.email }}</span><span>{{ user.password }}</span></li>
+{% endfor %}
+</ul>
+</body>
+</html>
