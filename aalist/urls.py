@@ -15,5 +15,9 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^signUp/', 'aalist.views.signUp', name='signUp'),
+    url(r'^signup/', 'aalist.views.signup', name='signup'),
+    url(r'^login/', 'aalist.views.login', name='login'),
+    url(r'^logout/', 'aalist.views.logout', name='logout'),
+    url(r'^users/', 'aalist.views.users', name='users'),
+    url(r'^$', 'aalist.views.hello', name='hello'),
 )
