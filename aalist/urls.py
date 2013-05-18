@@ -19,5 +19,6 @@ urlpatterns = patterns('',
     url(r'^login/', 'aalist.views.login', name='login'),
     url(r'^logout/', 'aalist.views.logout', name='logout'),
     url(r'^users/', 'aalist.views.users', name='users'),
+    url(r'^createGroup/', 'aalist.views.createGroup', name='createGroup'),
     url(r'^$', 'aalist.views.hello', name='hello'),
 )

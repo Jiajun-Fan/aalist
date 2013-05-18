@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User 
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from aalist.models import MyGroup
 import aaforms
 
 def signup(request):
@@ -16,8 +17,7 @@ def signup(request):
                                      email = form.cleaned_data['email'],
                                      password = form.cleaned_data['password'])
             user.save() 
-            users = User.objects.all()
-            return render_to_response("users.html", {'users': users})
+            return redirect('/')
         else:
             return render(request, "signup.html", {'form': form})
     else:
@@ -57,8 +57,24 @@ def users(request):
     return render_to_response("users.html", {'users': users})
 
 @login_required
+def groups(request):
+    groups = MyGroup.objects.all()
+    return render_to_response("groups.html", {'groups': groups})
+
+@login_required
 def createGroup(request):
-    pass
+    if request.method == 'POST':
+        form = aaforms.GroupForm(request.POST)
+        if form.is_valid():
+            group = MyGroup(name = form.cleaned_data['name']) 
+            group.save() 
+            group.members.add(request.user)
+            return redirect('/')
+        else:
+            return render(request, "createGroup.html", {'form': form})
+    else:
+        form = aaforms.GroupForm()
+        return render(request, "createGroup.html", {'form': form})
 
 def hello(request):
     return HttpResponse("hello, world!")

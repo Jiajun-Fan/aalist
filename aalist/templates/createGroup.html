@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head><title>AA List</title></head>
+<body>
+<form action="/createGroup/" method="post">
+{% csrf_token %}
+{% include "form_snippet.html" %} 
+<input type="submit" value="Submit" />
+</form>
+</body>
+</html>
