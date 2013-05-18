@@ -66,7 +66,11 @@ def createGroup(request):
     if request.method == 'POST':
         form = aaforms.GroupForm(request.POST)
         if form.is_valid():
-            group = MyGroup(name = form.cleaned_data['name']) 
+            name = form.cleaned_data['name']
+            group = MyGroup.objects.get(name=name)
+            if not group == None:
+                return HttpResponse("Group {} is already exist!".format(name))
+            group = MyGroup(name = name) 
             group.save() 
             group.members.add(request.user)
             return redirect('/')
