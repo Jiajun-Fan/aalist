@@ -1,5 +1,5 @@
-from django.shortcuts import render_to_response
 from django.shortcuts import render
+from django.shortcuts import render_to_response
 from django.shortcuts import redirect 
 from django.contrib import auth
 from django.contrib.auth import authenticate 
@@ -57,28 +57,14 @@ def users(request):
     return render_to_response("users.html", {'users': users})
 
 @login_required
-def groups(request):
-    groups = MyGroup.objects.all()
-    return render_to_response("groups.html", {'groups': groups})
-
-@login_required
-def createGroup(request):
-    if request.method == 'POST':
-        form = aaforms.GroupForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['name']
-            group = MyGroup.objects.get(name=name)
-            if not group == None:
-                return HttpResponse("Group {} is already exist!".format(name))
-            group = MyGroup(name = name) 
-            group.save() 
-            group.members.add(request.user)
-            return redirect('/')
-        else:
-            return render(request, "createGroup.html", {'form': form})
-    else:
-        form = aaforms.GroupForm()
-        return render(request, "createGroup.html", {'form': form})
+def info(request):
+    user = request.user
+    groupusers = user.mygroupuser_set.all()
+    groups = []
+    for u in groupusers:
+        groups.append(g.group)
+    return render_to_response("userinfo.html", 
+                             {'user': user, 'groups': groups},) 
 
 def hello(request):
     return HttpResponse("hello, world!")

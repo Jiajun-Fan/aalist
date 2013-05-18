@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head><title>AA List</title></head>
+<body>
+<ul>
+<li>Name: {{ user.username }}</li>
+<li>Email: {{ user.email }}</li>
+{% for group in groups %}
+    <li>{{ group.name }}<br>{{ group.id }}</li>
+{% endfor %}
+</ul>
+</body>
+</html>
