@@ -5,15 +5,18 @@
 Group Name: {{ group.name }}
 <form action="/group/opt/" method="POST">
 {% csrf_token %}
+{{ formset.management_form }}
+<input type='hidden' name='gid' value='{{ group.id }}'>
 <table>
-<tr><th></th><th>Name</th><th>Credit</th><th></th></tr>
-<tr><td></td><td>Total</td><td></td><td><input type='text' value=0></td></tr>
+<tr><th></th><th>Name</th><th>Credit</th><th></th><th></th></tr>
 {% for form in formset %}
 <tr>
+    {{ form.uid }}
     <td>{{ form.select }}</td>
     <td>{{ form.name.value }}</td>
-    <td>{{ form.credit.value }}</td>
-    <td>{{ form.value }}</td>
+    <td>{{ form.credit.error }} {{ form.credit.value }}</td>
+    <td>{{ form.paid.error }} {{ form.paid }}</td>
+    <td>{{ form.own.error }} {{ form.own }}</td>
 </tr>
 {% endfor %}
 <table>

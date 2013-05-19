@@ -18,7 +18,9 @@ class GroupForm(forms.ModelForm):
         fields = ['name', ]
 
 class OptionForm(forms.Form):
-    select = forms.BooleanField(widget=forms.CheckboxInput()) 
-    name = forms.CharField()
-    credit = forms.IntegerField()
-    value = forms.IntegerField(initial=0)
+    select = forms.BooleanField(widget=forms.CheckboxInput(), required=False, initial=False) 
+    uid = forms.IntegerField(widget=forms.HiddenInput())
+    name = forms.FloatField(required=False)
+    credit = forms.FloatField(required=False)
+    paid = forms.FloatField(initial=0)
+    own = forms.FloatField(initial=0)

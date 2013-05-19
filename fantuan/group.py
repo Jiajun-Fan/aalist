@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*- 
 from django.shortcuts import render_to_response
 from django.shortcuts import render
 from django.shortcuts import redirect 
@@ -10,6 +11,8 @@ from django.http import HttpResponse
 from fantuan.models import * 
 from django.core import exceptions
 import aaforms
+import string
+import random
 
 @login_required
 def groups(request):
@@ -67,9 +70,82 @@ def optGroup(request):
         users = []
         OptFormSet = formset_factory(aaforms.OptionForm, extra=0)
         for g in groupusers:
-            item = {'name': g.user.username, 'credit': g.credit}
+            item = {'name': g.user.username, 'credit': float(g.credit)/100, 'uid':g.id}
             users.append(item)
         formset = OptFormSet(initial=users)
-        return render(request, "group.html", {'group': group, 'users': users, 'formset': formset})
+        return render(request, "group.html", {'group': group, 'formset': formset})
     else:
-        return HttpResponse("TODO")
+        OptFormSet = formset_factory(aaforms.OptionForm)
+        formset = OptFormSet(request.POST)
+        if formset.is_valid():
+            try: 
+                gid = request.POST.get("gid")
+                group = MyGroup.objects.get(id=gid)
+            except exceptions.ObjectDoesNotExist:
+                return HttpResponse("This group doesn't exist!")
+            total = 0
+            cnt = 0
+            divcnt = 0
+            owntotal = 0
+            for form in formset:
+                if form.cleaned_data["select"] == True:
+                    cnt = cnt + 1
+                    paid = int(string.atof(form.cleaned_data["paid"])*100)
+                    own = int(string.atof(form.cleaned_data["own"])*100)
+                    if paid > 0:
+                        total = total + paid 
+                    if own > 0:
+                        owntotal = owntotal + own
+                    else:
+                        divcnt = divcnt + 1
+            if total < owntotal: 
+                return HttpResponse(u"总付款金额小于总应付金额")
+            m1 = total - owntotal
+            badluck = {} 
+            if m1:
+                if divcnt == 0:
+                    return HttpResponse(u"总付款金额与总应付金额不一致")
+                else:
+                    reminder = m1 % divcnt
+                    m1 = m1 - reminder
+                    badluck = getRandomList(divcnt-1, reminder)
+            activity = MyActivity(cost=total, group=group)
+            activity.save()
+            ret = "total: {}\n".format(total)
+            i = 0
+            for form in formset:
+                if form.cleaned_data["select"] == True:
+                    paid = int(string.atof(form.cleaned_data["paid"])*100)
+                    own = int(string.atof(form.cleaned_data["own"])*100)
+                    if own > 0:
+                        ret = ret + "paid: {}, own: {}, final: {}\n".format(paid, own, paid-own)
+                    else:
+                        own = m1 / divcnt
+                        if badluck.has_key(i):
+                            own = own + 1
+                        i = i + 1
+                        ret = ret + "paid: {}, own: {}, final: {}\n".format(paid, own, paid-own)
+                    delta = paid - own
+                    try:
+                        uid = form.cleaned_data["uid"]
+                        groupuser = group.mygroupuser_set.get(id=uid)
+                    except exceptions.ObjectDoesNotExist:
+                        return HttpResponse("uid error")
+                    groupuser.credit = groupuser.credit + delta
+                    groupuser.save()
+                    record = MyRecord(value=delta, groupuser=groupuser, activity=activity)
+                    groupuser.myrecord_set.add(record)
+                    activity.myrecord_set.add(record)
+                    record.save()
+            return HttpResponse(ret)
+        else:
+            return render(request, "group.html", {'formset': formset})
+
+def getRandomList(a, b):
+    ret = {}
+    while not b == 0:
+        c = random.randint(0, a)
+        if not ret.has_key(c):
+            b = b - 1
+            ret[c] = c
+    return ret
