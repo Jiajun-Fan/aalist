@@ -1,4 +1,4 @@
 import sae
-from aalist import wsgi
+from fantuan import wsgi
 
 application = sae.create_wsgi_app(wsgi.application)

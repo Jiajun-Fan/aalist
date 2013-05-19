@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User 
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from aalist.models import MyGroup
+from fantuan.models import MyGroup
 import aaforms
 
 def signup(request):
@@ -62,7 +62,7 @@ def info(request):
     groupusers = user.mygroupuser_set.all()
     groups = []
     for u in groupusers:
-        groups.append(g.group)
+        groups.append(u.group)
     return render_to_response("userinfo.html", 
                              {'user': user, 'groups': groups},) 
 

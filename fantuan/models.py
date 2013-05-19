@@ -8,11 +8,11 @@ class MyGroup(models.Model):
 class MyGroupUser(models.Model):
     credit = models.IntegerField()
     user = models.ForeignKey(User)
+    active = models.BooleanField()
     group = models.ForeignKey(MyGroup)
 
 class MyActivity(models.Model):
     cost = models.PositiveIntegerField()
-    active = models.BooleanField()
     group = models.ForeignKey(MyGroup)
 
 class MyRecord(models.Model):

@@ -1,4 +1,4 @@
-# Django settings for aalist project.
+# Django settings for fantuan project.
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -20,7 +20,7 @@ else:
     MYSQL_PORT = '3306'
     MYSQL_USER = 'root'
     MYSQL_PASS = 'fjj30891'
-    MYSQL_DB   = 'app_aalist'
+    MYSQL_DB   = 'app_fantuan'
 
 DATABASES = {
     'default': {
@@ -115,10 +115,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'aalist.urls'
+ROOT_URLCONF = 'fantuan.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'aalist.wsgi.application'
+WSGI_APPLICATION = 'fantuan.wsgi.application'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -136,7 +136,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
-    'aalist',
+    'fantuan',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

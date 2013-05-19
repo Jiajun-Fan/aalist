@@ -2,11 +2,22 @@
 <html>
 <head><title>AA List</title></head>
 <body>
-<ul>
-<li>Group Name: {{ group.name }}</li>
-{% for user in users %}
-    <li><span>{{ user.username }}</span><span>{{ user.email }}</span><span>{{ user.password }}</span></li>
+Group Name: {{ group.name }}
+<form action="/group/opt/" method="POST">
+{% csrf_token %}
+<table>
+<tr><th></th><th>Name</th><th>Credit</th><th></th></tr>
+<tr><td></td><td>Total</td><td></td><td><input type='text' value=0></td></tr>
+{% for form in formset %}
+<tr>
+    <td>{{ form.select }}</td>
+    <td>{{ form.name.value }}</td>
+    <td>{{ form.credit.value }}</td>
+    <td>{{ form.value }}</td>
+</tr>
 {% endfor %}
-</ul>
+<table>
+<input type='submit' value='Submit'>
+</form>
 </body>
 </html>
