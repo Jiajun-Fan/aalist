@@ -1,6 +1,11 @@
+<table>
 {% for field in form %}
 <div class="fieldWrapper">
-{{ field.errors }}
-{{ field.label_tag }}: {{ field }}
+<tr>{{ field.errors }}</tr>
+<tr>{{ field.label_tag }}</tr> 
+<tr>{{ field }}</tr>
 </div>
 {% endfor %}
+<div>
+</div>
+</table>

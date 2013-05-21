@@ -1,11 +1,29 @@
 <!DOCTYPE html>
-<html>
-<head><title>AA List</title></head>
-<body>
+{% include "top.html" %} 
+<div class="container">
+<div class="well">
 <form action="/user/signup/" method="post">
+<div id="login" class="container">
+<legend>注册新用户</legend>
 {% csrf_token %}
 {% include "form_snippet.html" %} 
-<input type="submit" value="Submit" />
-</form>
-</body>
-</html>
+<label class="checkbox">
+  <input type="checkbox">我已阅读并同意<a href="#myModal" role="button" data-toggle="modal">用户协议</a> 
+</label>
+<input id="mysubmit" type="submit" value="注册">
+</div>
+</div>
+</div>
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">用户协议</h3>
+  </div>
+  <div class="modal-body">
+    <p>你的是我的，我的还是我的</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>
+{% include "foot.html" %} 
