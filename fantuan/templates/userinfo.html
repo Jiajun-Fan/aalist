@@ -10,10 +10,19 @@
 {% endif %}
 <a type="button" class="btn btn-success" href="/group/create">新建饭团</a>
 <p></p>
-<p class="text-warning"> 或者可以加入现有的<code>饭团</code></p>
-{% for group in groups %}
+{% if allgroups %}
+<p class="text-warning"> 或者可以加入其他人的<code>饭团</code></p>
+{% for group in allgroups %}
 <a type="button" class="btn btn-success" href="/group/join?gid={{ group.id }}">加入饭团{{ group.name}}</a>
 {% endfor %}
+{% endif %}
+<p></p>
+{% if groups %}
+<p class="text-warning"> 或者开始您已经加入的<code>饭团</code></p>
+{% for group in groups %}
+<a type="button" class="btn btn-success" href="/group/opt?gid={{ group.id }}">饭团{{ group.name}}</a>
+{% endfor %}
+{% endif %}
 </div>
 </div>
 {% include "foot.html" %} 

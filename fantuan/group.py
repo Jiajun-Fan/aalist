@@ -137,6 +137,7 @@ def optGroup(request):
                     groupuser.myrecord_set.add(record)
                     activity.myrecord_set.add(record)
                     record.save()
+            return redirect('/group/opt?gid={}'.format(gid))
             return HttpResponse(ret)
         else:
             return render(request, "group.html", {'formset': formset})

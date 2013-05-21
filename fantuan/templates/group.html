@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head><title>AA List</title></head>
-<body>
-Group Name: {{ group.name }}
+{% include "top.html" %} 
+<div class="container">
+<div class="row">
+<div id="login" class="span8 offset2">
+<legend>Group: {{group.name}}</legend>
 <form action="/group/opt/" method="POST">
 {% csrf_token %}
 {{ formset.management_form }}
 <input type='hidden' name='gid' value='{{ group.id }}'>
 <table>
-<tr><th></th><th>Name</th><th>Credit</th><th></th><th></th></tr>
+<tr><th></th><th>Name</th><th>金额</th><th>实付</th><th>应付</th></tr>
 {% for form in formset %}
 <tr>
     {{ form.uid }}
@@ -20,7 +20,9 @@ Group Name: {{ group.name }}
 </tr>
 {% endfor %}
 <table>
-<input type='submit' value='Submit'>
+<button class="btn btn-primary" type="submit">提交</button>
+</div>
+</div>
+</div>
 </form>
-</body>
-</html>
+{% include "foot.html" %} 

@@ -37,7 +37,7 @@ def login(request):
         if not user == None:
             auth.login(request, user)
             orig = request.GET.get('next', None)
-            if orig and not orig == '/login':
+            if orig and not orig == '/login' and not orig == "/":
                 return redirect(orig)
             else:
                 return redirect('/user/info')
@@ -64,13 +64,22 @@ def users(request):
 def info(request):
     user = request.user
     groupusers = user.mygroupuser_set.all()
+    allgroupsquery = MyGroup.objects.all()
     groups = []
+    allgroups = []
+    for g in allgroupsquery:
+        allgroups.append(g)
     new = False 
-    if len(groups) == 0:
+    if len(groupusers) == 0:
         new = True
-    groups = MyGroup.objects.all()
+    else:
+        for gu in groupusers: 
+            group = gu.group
+            if group in allgroups:
+                allgroups.remove(group)
+                groups.append(group)
     return render_to_response("userinfo.html", 
-                             {'user': user, "new":new, 'groups': groups},) 
+                             {'user': user, "new":new, 'groups': groups, 'allgroups':allgroups},) 
 
 def hello(request):
     return HttpResponse("hello, world!")

@@ -1,11 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head><title>AA List</title></head>
-<body>
+{% include "top.html" %} 
+<div class="container">
 <form action="/group/create/" method="post">
+<div class="row">
+<div id="login" class="span4 offset4">
+<legend>注册新的Group</legend>
 {% csrf_token %}
 {% include "form_snippet.html" %} 
-<input type="submit" value="Submit" />
+<button class="btn btn-primary" type="submit">注册</button>
+</div>
+</div>
+</div>
 </form>
-</body>
-</html>
+{% include "foot.html" %} 
