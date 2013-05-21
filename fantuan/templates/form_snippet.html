@@ -1,8 +1,12 @@
 <table>
 {% for field in form %}
 <div class="fieldWrapper">
-<tr>{{ field.errors }}</tr>
-<tr>{{ field.label_tag }}</tr> 
+<tr> 
+{% for error in field.errors %}
+<p class="text-error">{{ error | escape }}</p>
+{% endfor %}
+</tr>
+<tr><h3>{{ field.label_tag }}</h3></tr> 
 <tr>{{ field }}</tr>
 </div>
 {% endfor %}

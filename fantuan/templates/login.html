@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html>
-<head><title>AA List</title></head>
-<body>
+{% include "top.html" %} 
+<div class="container">
 <form action="/user/login/?next={{ from }}" method="post">
+<div class="row">
+<div id="login" class="span4 offset4">
+<legend>登录</legend>
 {% csrf_token %}
 {% include "form_snippet.html" %} 
-<input type="submit" value="Submit" />
+<button class="btn btn-primary" type="submit">登录</button>
+</div>
+</div>
+</div>
 </form>
-</body>
-</html>
+{% include "foot.html" %} 

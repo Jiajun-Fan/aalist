@@ -1,13 +1,19 @@
 <!DOCTYPE html>
-<html>
-<head><title>AA List</title></head>
-<body>
-<ul>
-<li>Name: {{ user.username }}</li>
-<li>Email: {{ user.email }}</li>
+{% include "top.html" %} 
+<div class="container">
+<div class="well">
+<h2>欢迎，{{ user.username }}!</h2>
+{% if new %}
+<p class="text-warning"> 您还没有加入任何<code>饭团</code>，是否建立一个新的<code>饭团</code>？</p>
+{% else %}
+<p class="text-warning"> 您可以新建一个<code>饭团</code></p>
+{% endif %}
+<a type="button" class="btn btn-success" href="/group/create">新建饭团</a>
+<p></p>
+<p class="text-warning"> 或者可以加入现有的<code>饭团</code></p>
 {% for group in groups %}
-    <li>{{ group.name }}<br>{{ group.id }}</li>
+<a type="button" class="btn btn-success" href="/group/join?gid={{ group.id }}">加入饭团{{ group.name}}</a>
 {% endfor %}
-</ul>
-</body>
-</html>
+</div>
+</div>
+{% include "foot.html" %} 

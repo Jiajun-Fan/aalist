@@ -1,15 +1,18 @@
+# -*- coding:utf-8 -*-
 from django import forms
 from django.contrib.auth.models import User 
 from fantuan.models import MyGroup
 
 class UserForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput())
+    password = forms.CharField(widget=forms.PasswordInput(attrs={"class": "input-block-level"}))
+    username = forms.CharField(widget=forms.TextInput(attrs={"class": "input-block-level"}))
+    email = forms.CharField(widget=forms.TextInput(attrs={"class": "input-block-level"}))
     class Meta:
         model = User
         fields = ['username', 'email', 'password']
 
 class LoginForm(forms.Form):
-    username = forms.CharField()
+    username = forms.CharField(widget=forms.TextInput())
     password = forms.CharField(widget=forms.PasswordInput())
 
 class GroupForm(forms.ModelForm):
