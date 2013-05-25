@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test 
 from django.http import HttpResponse
 from fantuan.models import MyGroup
+from mail import sendSignUpMail
 import aaforms
 
 def signup(request):
@@ -37,6 +38,7 @@ def login(request):
         if not user == None:
             auth.login(request, user)
             orig = request.GET.get('next', None)
+            sendSignUpMail(user.email, user.username)
             if orig and not orig == '/login' and not orig == "/":
                 return redirect(orig)
             else:
